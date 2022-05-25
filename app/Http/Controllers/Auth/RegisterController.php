@@ -47,59 +47,6 @@ class RegisterController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    // protected function validator(array $data)
-    // {
-
-    //     return Validator::make($data, [
-
-    //         'fname'         => ['required', 'string', 'max:255'],
-    //         'lname'         => ['required', 'string', 'max:255'],
-    //         'email'         => ['required', 'string', 'email', 'max:255', 'unique:users'],
-    //         'password'      => ['required', 'string', 'min:8'],
-    //         'mobile'        => ['required'],
-
-    //     ]);
-    // }
-
-    // /**
-    //  * Create a new user instance after a valid registration.
-    //  *
-    //  * @param  array  $data
-    //  * @return \App\User
-    //  */
-    // protected function create(array $data)
-    // {
-    //     $data =  [
-    //         'fname'           => $data['fname'],
-    //         'lname'           => $data['lname'],
-    //         'email'           => $data['email'],
-    //         'mobile'          => $data['mobile'],
-    //         'password'       => bcrypt($data['password']),
-    //     ];
-    //     $user = User::create($data);
-    //     $user->save();
-    //     $token = Str::random(64);
-    //     $email =  $user->email;
-    //     Mail::send('emails.emailVerificationEmail', ['token' => $token], function ($message) use ($email) {
-    //         $message->to($email);
-    //         $message->subject('Email Verification Mail');
-    //     });
-    //     UserVerify::create([
-    //         'user_id' => $user->id,
-    //         'token' => $token
-    //     ]);
-    // }
-
-    public function showRegistrationForm()
-    {
-        return view('auth.register');
-    }
     public function registerto(Request $request)
     {
         $validator = validator()->make($request->all(), [

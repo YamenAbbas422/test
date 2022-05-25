@@ -7,6 +7,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UsersController;
+use GuzzleHttp\Middleware;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,16 +31,11 @@ Route::get('account/verify/{token}', [UserController::class, 'verifyAccount'])->
 Route::post('/resetPassword', [UsersController::class, 'resetPassword']);
 
 
-Route::get('/login', [LoginController::class, 'showLoginForm']);
+Route::get('/showlogin', [UsersController::class, 'showLoginForm']);
 Route::post('/loginto', [LoginController::class, 'loginto']);
-Route::post('logout',  [LoginController::class, 'logout']);
 
-Route::get('/register',[RegisterController::class,'showRegistrationForm']);
+Route::get('/register',[UsersController::class,'showRegistrationForm']);
 Route::post('/registerto', [RegisterController::class, 'registerto']);
-
-
-
-
 
 //Users
 Route::get('/users', [UserController::class, 'users']);

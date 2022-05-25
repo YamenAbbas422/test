@@ -22,5 +22,11 @@ class UsersController extends Controller
         $user->save();
         return redirect ('/login')->with('message','Change Password Is Done.');
     }
-
+    public function showLoginForm() {
+        return view('auth.login');
+    }
+    public function showRegistrationForm()
+    {
+        return view('auth.register');
+    }
 }

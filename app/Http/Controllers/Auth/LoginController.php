@@ -1,12 +1,14 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
+
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+
 class LoginController extends Controller
 {
     /*
@@ -44,22 +46,21 @@ class LoginController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    // public function __construct()
+    // {
+    //     // $this->middleware('guest')->except('logout');
+    //     $this->middleware('auth');
+
+    // }
+
+    public function loginto(Request $request)
     {
-        // $this->middleware('guest')->except('logout');
-        $this->middleware('auth');
-
-    }
-
-    public function showLoginForm() {
-        return view('auth.login');
-    }
-    
-    public function login(Request $request) {
-        $user = User::all();
-        if($request->email = $user->email && $request->password = $user->password){
+        // return $request;
+        $user = User::where("email", $request->email)->first();
+        $password = $user->password;
+        if ($password = $request->password) {
             return view('dashboard.index');
-        }else{
+        } else {
             return view('auth.login');
         }
     }

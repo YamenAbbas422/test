@@ -19,11 +19,11 @@
             <div class="frm-title">Login</div>
             <!-- /.frm-title -->
             <div class="frm-input">
-                <input type="text" placeholder="Username" class="frm-inp"><i class="fa fa-user frm-ico"></i>
+                <input type="text" name="email" placeholder="Username" class="frm-inp"><i class="fa fa-user frm-ico"></i>
             </div>
             <!-- /.frm-input -->
             <div class="frm-input">
-                <input type="password" placeholder="Password" class="frm-inp"><i class="fa fa-lock frm-ico"></i>
+                <input type="password" name="password" placeholder="Password" class="frm-inp"><i class="fa fa-lock frm-ico"></i>
             </div>
             <!-- /.frm-input -->
             <div class="clearfix margin-bottom-20">
