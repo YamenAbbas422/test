@@ -52,7 +52,7 @@
                 <!-- /.col-sm-6 -->
             </div>
             <!-- /.row -->
-            <a href="#" class="a-link"><i class="fa fa-key"></i>New to YamenAdmin? Register.</a>
+            <a href="/register" class="a-link"><i class="fa fa-key"></i>New to YamenAdmin? Register.</a>
             <div class="frm-footer">YamenAdmin © 2022.</div>
             <!-- /.footer -->
         </div>

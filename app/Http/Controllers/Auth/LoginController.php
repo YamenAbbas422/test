@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Symfony\Component\Console\Input\Input;
 
 class LoginController extends Controller
 {
@@ -25,43 +26,32 @@ class LoginController extends Controller
     // use AuthenticatesUsers;
 
     /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    //  public function redirectTo()
-    //  {
-    //      if (Auth::user() -> user_type == 'vendor')
-    //      {
-    //         return 'dashboard';
-    //      }
-    //      if (Auth::user()-> user_type == 'users')
-    //      {
-    //          return 'dashboard';
-    //      }
-    //  }
-
-    /**
      * Create a new controller instance.
      *
      * @return void
      */
-    // public function __construct()
-    // {
-    //     // $this->middleware('guest')->except('logout');
-    //     $this->middleware('auth');
+    public function __construct()
+    {
+        $this->middleware('guest')->except('logout');
 
-    // }
+    }
 
     public function loginto(Request $request)
     {
-        // return $request;
-        $user = User::where("email", $request->email)->first();
-        $password = $user->password;
-        if ($password = $request->password) {
+        $login = request()->input('email');
+
+        $field = filter_var($login, FILTER_VALIDATE_EMAIL) ? 'email' : 'mobile';
+
+        $val = request()->merge([$field => $login]);
+
+        if (Auth::attempt(array($field => request()->input('email'), 'password' => request()->input('password')))){
             return view('dashboard.index');
-        } else {
-            return view('auth.login');
+        }else{
+                return view('auth.login');
         }
     }
+    public function logout(Request $request) {
+        Auth::logout();
+        return redirect('/showlogin');
+      }
 }

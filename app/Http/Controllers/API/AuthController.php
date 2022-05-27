@@ -51,7 +51,7 @@ class AuthController extends Controller
             'password' => bcrypt(request()->get('password')),
             'mobile' => request()->get('mobile'),
         ]);
-        $token = Str::random(64);
+        $token = random_int(0000,9999);
         $email =  $user->email;
         Mail::send('emails.emailVerificationEmail', ['token' => $token], function ($message) use ($email) {
             $message->to($email);
@@ -85,13 +85,13 @@ class AuthController extends Controller
 
         } else {
             $user = User::where('email', $credentials['email'])->first();
+            if ($user->is_email_verified == 0) {
+                return response()->json([
+                    'message' => 'please verified your account'
+                ]);
+            }
         }
-
-        if ($user->is_email_verified == 0) {
-            return response()->json([
-                'message' => 'please verified your account'
-            ]);
-        }
+        
         if (!$token = JWTAuth::attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }

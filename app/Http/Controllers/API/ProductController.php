@@ -23,11 +23,20 @@ class ProductController extends Controller
         }
         $product->description = $request->description;
         $product->save();
+        $users = $request->user;
+        foreach($users as $user){
+            $data= [
+                'user_id'=> $user,
+                'product_id'=> $product->id
+            ];
+        ProductUser::create($data);
+        }
         return response()->json([
             'message' => 'The Information Product Is:',
-            'user' => $product
+            'product' => $product,
+            'user' => $users
         ]);
-    }
+    } 
     public function editproduct(Request $request, $id)
     {
         $product = Product::find($id);
@@ -42,9 +51,19 @@ class ProductController extends Controller
         }
         $product->description = $request->description;
         $product->save();
+        $user_product= ProductUser::where('product_id',$id)->delete();
+        $users = $request->user;
+        foreach($users as $user){
+            $data= [
+                'user_id'=> $user,
+                'product_id'=> $product->id
+            ];
+        ProductUser::create($data);
+        }
         return response()->json([
             'message' => 'Edit infomation is Done',
-            'user' => $product
+            'product' => $product,
+            'user' => $users
         ]);
     }
     public function deleteproduct($id)

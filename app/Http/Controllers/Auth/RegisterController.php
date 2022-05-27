@@ -42,10 +42,10 @@ class RegisterController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth');
+    // }
 
     public function registerto(Request $request)
     {
@@ -53,7 +53,7 @@ class RegisterController extends Controller
             'fname' => 'string|required',
             'lname' => 'string|required',
             'email' => 'email|required|unique:users',
-            'password' => 'string | min:6|confirmed',
+            'password' => 'string | min:6',
             'mobile' => 'string|required|unique:users',
         ]);
         $user = User::create([
@@ -64,7 +64,7 @@ class RegisterController extends Controller
             'mobile' =>$request->mobile,
         ]);
         
-        $token = Str::random(64);
+        $token = random_int(1000,9999);
         $email =  $user->email;
         Mail::send('emails.emailVerificationEmail', ['token' => $token], function ($message) use ($email) {
             $message->to($email);
@@ -74,6 +74,6 @@ class RegisterController extends Controller
             'user_id' => $user->id,
             'token' => $token
         ]);
-        return view('auth.register');
+        return view('auth.confirmemail');
     }
 }

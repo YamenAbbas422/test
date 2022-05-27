@@ -7,9 +7,14 @@
 	</div>
 	<!-- /.pull-left -->
 	<div class="pull-right">
-		<a href="/register"><button type="button" class="btn btn-success btn-rounded btn-bordered waves-effect waves-light float-left">Register</button></a>
-		<a href="/showlogin"><button type="button" class="btn btn-violet btn-rounded  btn-bordered waves-effect waves-light float-left">Login</button></a>
-		<a href="#" class="ico-item fa fa-power-off js__logout"></a>
+		<a class="ico-item fa fa-power-off" href="{{ route('logout') }}"
+								onclick="event.preventDefault();
+												document.getElementById('logout-form').submit();">
+								<span class="link">
+								</span>
+							</a>							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+								@csrf
+							</form>
 	</div>
 	<!-- /.pull-right -->
 </div>

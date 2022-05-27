@@ -21,22 +21,24 @@ use GuzzleHttp\Middleware;
 */
 
 //Start Dashboard
-Route::get('/', function () {
-    return view('dashboard.index');
-});
-
+// Route::get('/', function () {
+//     return view('dashboard.index');
+// });
+Route::get('/', [UserController::class, 'index']);
 //
-Auth::routes();
-Route::get('account/verify/{token}', [UserController::class, 'verifyAccount'])->name('user.verify');
+Auth::routes(['login'=>false]);
+Route::get('account/verify/{token}', [UsersController::class, 'verifyAccount'])->name('user.verify');
 Route::post('/resetPassword', [UsersController::class, 'resetPassword']);
 
 
-Route::get('/showlogin', [UsersController::class, 'showLoginForm']);
+Route::get('/showlogin', [UsersController::class, 'showLoginForm'])->name('login');
 Route::post('/loginto', [LoginController::class, 'loginto']);
 
 Route::get('/register',[UsersController::class,'showRegistrationForm']);
 Route::post('/registerto', [RegisterController::class, 'registerto']);
 
+
+Route::group(['middeleware'=>['auth','users']],function (){
 //Users
 Route::get('/users', [UserController::class, 'users']);
 Route::post('/createuser', [UserController::class, 'createuser']);
@@ -53,3 +55,4 @@ Route::get('/deleteproduct/{id}', [ProductController::class, 'deleteproduct']);
 Route::get('/showproduct/{id}', [UserController::class, 'showproduct']);
 
 //End Dashboard
+});

@@ -10,6 +10,10 @@ use App\Models\User;
 
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     //Show Producte Informations
     public function products()
     {

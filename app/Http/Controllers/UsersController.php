@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\UserVerify;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -20,7 +21,7 @@ class UsersController extends Controller
         
         $user->password = bcrypt($request->password);
         $user->save();
-        return redirect ('/login')->with('message','Change Password Is Done.');
+        return redirect ('/showlogin')->with('message','Change Password Is Done.');
     }
     public function showLoginForm() {
         return view('auth.login');
@@ -29,4 +30,19 @@ class UsersController extends Controller
     {
         return view('auth.register');
     }
+    public function verifyAccount($token)
+    {
+        $verifyUser = UserVerify::where('token', $token)->first();
+        if ($verifyUser != null) {
+            $user = $verifyUser->user_id;
+            $user = User::find($verifyUser->user_id);
+            $user->email_verified_at = now();
+            $user->is_email_verified =  1;
+            $user->save();
+        } else {
+            dd('Sorry your email cannot be identified.');
+        }
+        return redirect('/showlogin');
+    }
+
 }

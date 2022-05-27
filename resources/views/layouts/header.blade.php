@@ -63,7 +63,7 @@
 				<!-- /.title -->
 				<ul class="menu js__accordion">
 					<li class="current">
-						<a class="waves-effect" href="/"><i class="menu-icon fa fa-home"></i><span>Dashboard</span></a>
+						<a class="waves-effect" href=""><i class="menu-icon fa fa-home"></i><span>Dashboard</span></a>
 					</li>
 
 				</ul>

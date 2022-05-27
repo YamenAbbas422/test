@@ -14,7 +14,14 @@ use Illuminate\Support\Facades\Mail;
 class UserController extends Controller
 {
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     //Get Users Informations
+    public function index(){
+        return view('dashboard.index');
+    }
     public function users()
     {
         $users = User::all();
@@ -75,24 +82,6 @@ class UserController extends Controller
         $delete = User::find($id)->delete();
         return redirect('/users');
     }
-
-
-    public function verifyAccount($token)
-    {
-        $verifyUser = UserVerify::where('token', $token)->first();
-        if ($verifyUser != null) {
-            $user = $verifyUser->user_id;
-            $user = User::find($verifyUser->user_id);
-            $user->email_verified_at = now();
-            $user->is_email_verified =  1;
-            $user->save();
-            return 'email is verified';
-        } else {
-            dd('Sorry your email cannot be identified.');
-        }
-        return redirect('/login');
-    }
-
     //Show Products User
     public function showproduct($user_id)
     {
