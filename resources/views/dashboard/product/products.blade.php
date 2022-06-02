@@ -1,26 +1,4 @@
 @extends('layouts.header')
-<div class="fixed-navbar">
-    <div class="pull-left">
-        <button type="button" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
-        <h1 class="page-title">Products</h1>
-        <!-- /.page-title -->
-    </div>
-    <!-- /.pull-left -->
-    <div class="pull-right">
-    <a class="ico-item fa fa-power-off" href="{{ route('logout') }}"
-								onclick="event.preventDefault();
-												document.getElementById('logout-form').submit();">
-								<span class="link">
-								</span>
-							</a>							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-								@csrf
-							</form>
-    </div>
-    <!-- /.pull-right -->
-</div>
-<!-- /.fixed-navbar -->
-
-
 
 <div id="wrapper">
     <div class="main-content">
@@ -55,7 +33,7 @@
                                 </td>
                                 <td>
                                     <button type="button" data-remodal-target="remodaledit-{{$product->id}}" class="btn btn-success btn-sm" title="edit"><i class="ico mdi mdi-tooltip-edit"></i></button>
-                                    <a href="/deleteproduct/{{$product->id}}"><button type="button" class="btn btn-danger btn-sm" title="delete"><i class="ico mdi mdi-delete-forever"></i></button></a>
+                                    <a class="delete" href="/deleteproduct/{{$product->id}}"><button type="button" class="btn btn-danger btn-sm" title="delete"><i class="ico mdi mdi-delete-forever"></i></button></a>
                                 </td>
                             </tr>
                             @endforeach
@@ -92,17 +70,17 @@
                         <div class="col-sm-9">
                             <input type="text" name="description" class="form-control" id="inp-type-2" placeholder="Enter Description">
                         </div>
-                        <div class="form-group">
+                    </div>
+                    <div class="form-group">
                         <label for="inp-type-3" class="col-sm-3 control-label">User</label>
                         <div class="col-sm-9">
-                            <select class="form-select col-sm-11 select2_1" name="user[]" multiple="multiple" aria-label="Default select example">
+                            <select class="form-control select2_1" name="user[]" multiple="multiple" required>
                                 <option>select user</option>
                                 @foreach($users as $user)
                                 <option value="{{$user->id}}">{{$user->fname}}</option>
                                 @endforeach
                             </select>
                         </div>
-                    </div>
                     </div>
                     <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
                     <button type="submit" class="remodal-confirm">Add</button>
@@ -139,7 +117,7 @@
                     <div class="form-group">
                         <label for="inp-type-3" class="col-sm-3 control-label">User</label>
                         <div class="col-sm-9">
-                            <select class="form-select col-sm-11" name="user[]" multiple="multiple" aria-label="Default select example">
+                            <select class="form-control select2_1" name="user[]" multiple="multiple" aria-label="Default select example" required>
                                 <option>select user</option>
                                 @foreach($users as $user)
                                 <option value="{{$user->id}}">{{$user->fname}}</option>
@@ -148,10 +126,11 @@
                         </div>
                     </div>
                     <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
-                    <button type="submit" class="remodal-confirm">Add</button>
+                    <button type="submit" class="remodal-confirm">Edit</button>
                 </form>
             </div>
         </div>
         @endforeach
         <!-- End Modal Edit -->
         @extends('layouts.footer')
+        

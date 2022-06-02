@@ -1,25 +1,4 @@
 @extends('layouts.header')
-<div class="fixed-navbar">
-    <div class="pull-left">
-        <button type="button" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
-        <h1 class="page-title">Users</h1>
-        <!-- /.page-title -->
-    </div>
-    <!-- /.pull-left -->
-    <div class="pull-right">
-    <a class="ico-item fa fa-power-off" href="{{ route('logout') }}"
-								onclick="event.preventDefault();
-												document.getElementById('logout-form').submit();">
-								<span class="link">
-								</span>
-							</a>							<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-								@csrf
-							</form>
-    </div>
-    <!-- /.pull-right -->
-</div>
-<!-- /.fixed-navbar -->
-
 
 <div id="wrapper">
     <div class="main-content">
@@ -47,8 +26,8 @@
                                 <td>{{$user->mobile}}</td>
                                 <td>
                                     <button type="button" data-remodal-target="remodaledit-{{$user->id}}" class="btn btn-success btn-sm" title="edit"><i class="ico mdi mdi-tooltip-edit"></i></button>
-                                    <a href="/deleteuser/{{$user->id}}"><button type="button" class="btn btn-danger btn-sm" title="delete"><i class="ico mdi mdi-delete-forever"></i></button></a>
-                                    <a href="/showproduct/{{$user->id}}"><button type="button" class="btn btn-primary btn-sm" title="showproduct"><i class="fa fa-eye" aria-hidden="true"></i></i></button></a>
+                                    <a class="delete" href="/deleteuser/{{$user->id}}"><button type="button" class="btn btn-danger btn-sm" title="delete"><i class="ico mdi mdi-delete-forever"></i></button></a>
+                                    <button type="button" data-remodal-target="remodalshow-{{$user->id}}" class="btn btn-primary btn-sm" title="showproduct"><i class="fa fa-eye" aria-hidden="true"></i></i></button>
                                 </td>
                             </tr>
                             @endforeach
@@ -98,6 +77,12 @@
                             <input type="password" name="password" class="form-control" id="inp-type-3" placeholder="Password">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="inp-type-3" class="col-sm-3 control-label">Confirmed Password</label>
+                        <div class="col-sm-9">
+                            <input type="password" name="password_confirmation" class="form-control" id="inp-type-3" placeholder="Confirmed Password">
+                        </div>
+                    </div>
                     <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
                     <button type="submit" class="remodal-confirm">Add</button>
                 </form>
@@ -142,11 +127,49 @@
                             <input type="password" name="password" class="form-control" id="inp-type-3" value="password" placeholder="Password">
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label for="inp-type-3" class="col-sm-3 control-label">Confirmed Password</label>
+                        <div class="col-sm-9">
+                            <input type="password" name="password_confirmation" class="form-control" id="inp-type-3" placeholder="Confirmed Password">
+                        </div>
+                    </div>
                     <button data-remodal-action="cancel" class="remodal-cancel">Cancel</button>
-                    <button type="submit" class="remodal-confirm">Add</button>
+                    <button type="submit" class="remodal-confirm">Edit</button>
                 </form>
             </div>
         </div>
         @endforeach
         <!-- End Modal Edit -->
+
+        @foreach($users as $user)
+        <!-- Start Modal show products  -->
+        <div class="remodal" data-remodal-id="remodalshow-{{$user->id}}" role="dialog" aria-labelledby="modal1Title" aria-describedby="modal1Desc">
+            <button data-remodal-action="close" class="remodal-close" aria-label="Close"></button>
+            <div class="remodal-content">
+            <div class="box-content">
+                    <table id="example" class="table table-striped table-bordered display" style="width:100%; text-align: center;">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center;">{{__('Name')}}</th>
+                                <th style="text-align: center;">{{__('Image')}}</th>
+                                <th style="text-align: center;">{{__('Description')}}</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach($user['products'] as $product)
+                            <tr>
+                                <td>{{$product->name}}</td>
+                                <td><a href="{{'images/products/'.$product->image}}"><img src="{{'images/products/'.$product->image}}" width="130px" height="100px" alt="image"></a></td>
+                                <td>{{$product->description}}</td>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-content -->
+            </div>
+        </div>
+        @endforeach
+        <!-- End Modal show products -->
         @extends('layouts.footer')

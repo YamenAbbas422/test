@@ -35,6 +35,8 @@
 			<!-- /.frm-input -->
 			<div class="frm-input"><input type="password" name="password" placeholder="Password" class="frm-inp"><i class="fa fa-lock frm-ico"></i></div>
 			<!-- /.frm-input -->
+			<div class="frm-input"><input type="password" name="confirmed_password" placeholder="Confirmed Password" class="frm-inp"><i class="fa fa-lock frm-ico"></i></div>
+			<!-- /.frm-input -->
 			<div class="clearfix margin-bottom-20">
 				<div class="checkbox primary"><input type="checkbox" id="accept"><label for="accept">I accept Terms and Conditions</label></div>
 				<!-- /.checkbox -->

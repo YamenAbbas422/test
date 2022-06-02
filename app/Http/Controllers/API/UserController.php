@@ -12,14 +12,22 @@ class UserController extends Controller
     public function user($id)
     {
         $user = User::find($id);
-        return response()->json([
-            'message'=>'The Information User Is:',
-            'user'=>$user
-        ]);
+        if($user != null){
+            return response()->json([
+                'message'=>'The Information User Is:',
+                'user'=>$user
+            ]);
+        }else{
+            return response()->json([
+                'message'=>'User is not found',
+            ],400);
+        }
+       
     }
     public function update(Request $request,$id)
     {
         $updateuser=User::where('id',$id)->first();
+        if($updateuser != null){
         if($updateuser->email != $request->email){
             $simuler_email =User::where('email', $request->email)->get();
             if (count($simuler_email)>0){
@@ -30,11 +38,17 @@ class UserController extends Controller
         $updateuser->lname=$request->lname;
         $updateuser->email=$request->email;
         $updateuser->password=bcrypt($request->password);
+        $updateuser->mobile=$request->mobile;
         $updateuser->save();
         return response()->json([
             'message'=> 'Update infomation is Done',
             'updateuser'=> $updateuser
         ]);
+    }else{
+        return response()->json([
+            'message'=>'User is not found',
+        ],400);
+    }
     }
     public function changepassword(Request $request,$id)
     {

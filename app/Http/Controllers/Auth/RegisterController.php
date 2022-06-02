@@ -53,7 +53,7 @@ class RegisterController extends Controller
             'fname' => 'string|required',
             'lname' => 'string|required',
             'email' => 'email|required|unique:users',
-            'password' => 'string | min:6',
+            'password' => 'string | min:6 | confirmed',
             'mobile' => 'string|required|unique:users',
         ]);
         $user = User::create([

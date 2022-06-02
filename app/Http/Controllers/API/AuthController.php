@@ -79,17 +79,26 @@ class AuthController extends Controller
         $val = request()->merge([$field => $credentials['email']]);
         if ($field == 'mobile') {
             $user_mobile = User::where('mobile', $credentials['email'])->first();
+            if ($user_mobile != null){
             $user = User::where('email', $user_mobile->email)->first();
             $credentials = array('email' => $user->email, 'password' => request('password'));
-            // return $credentials;
-
+            }else{
+                return response()->json([
+                    'message'=>'Mobile Number is not found'
+                ],400);
+            }
         } else {
             $user = User::where('email', $credentials['email'])->first();
-            if ($user->is_email_verified == 0) {
+            if ($user == null){
                 return response()->json([
-                    'message' => 'please verified your account'
-                ]);
+                    'message'=>'Email is not found'
+                ],400);
             }
+        }
+        if ($user->is_email_verified == 0) {
+            return response()->json([
+                'message' => 'please verified your account'
+            ]);
         }
         
         if (!$token = JWTAuth::attempt($credentials)) {

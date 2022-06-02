@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\UserVerify;
@@ -11,27 +12,34 @@ class UsersController extends Controller
 {
 
 
-    public function resetPassword(Request $request){
-        
+    public function resetPassword(Request $request)
+    {
+
         $data = request()->validate([
             'email' => 'min:2',
             'password'     => ['required', 'string', 'min:8', 'confirmed'],
         ]);
-        $user = User::where('email',$request->email)->first();
-        
+        $user = User::where('email', $request->email)->first();
+
         $user->password = bcrypt($request->password);
         $user->save();
-        return redirect ('/showlogin')->with('message','Change Password Is Done.');
+        return redirect('/showlogin')->with('message', 'Change Password Is Done.');
     }
-    public function showLoginForm() {
+    public function showLoginForm()
+    {
         return view('auth.login');
     }
     public function showRegistrationForm()
     {
         return view('auth.register');
     }
-    public function verifyAccount($token)
+    public function pageverify()
     {
+        return view('auth.pageverify');
+    }
+    public function verifyAccount(Request $request)
+    {
+        $token = $request->token;
         $verifyUser = UserVerify::where('token', $token)->first();
         if ($verifyUser != null) {
             $user = $verifyUser->user_id;
@@ -41,8 +49,8 @@ class UsersController extends Controller
             $user->save();
         } else {
             dd('Sorry your email cannot be identified.');
+            return redirect()->back();
         }
         return redirect('/showlogin');
     }
-
 }

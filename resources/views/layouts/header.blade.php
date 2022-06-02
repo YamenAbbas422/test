@@ -39,6 +39,11 @@
 	<link rel="stylesheet" href="assets/color-switcher/color-switcher.min.css">
 	<!-- Material Design Icon -->
 	<link rel="stylesheet" href="assets/fonts/material-design/css/materialdesignicons.css">
+	<!--Sweet Alert Codes-->
+    <!--JQuery CDN-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <!--Sweet Alert CDN-->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -85,3 +90,22 @@
 		<!-- /.content -->
 	</div>
 	<!-- /.main-menu -->
+	<div class="fixed-navbar">
+	<div class="pull-left">
+        <button type="button" class="menu-mobile-button glyphicon glyphicon-menu-hamburger js__menu_mobile"></button>
+        <!-- /.page-title -->
+    </div>
+    <!-- /.pull-left -->
+		<div class="pull-right">
+			<a class="ico-item fa fa-power-off js__logout" href="{{ route('logout') }}" onclick="event.preventDefault();
+												document.getElementById('logout-form').submit();">
+				<span class="link">
+				</span>
+			</a>
+			<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+				@csrf
+			</form>
+		</div>
+		<!-- /.pull-right -->
+	</div>
+	<!-- /.fixed-navbar -->

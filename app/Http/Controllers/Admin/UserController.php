@@ -19,12 +19,14 @@ class UserController extends Controller
         $this->middleware('auth');
     }
     //Get Users Informations
-    public function index(){
+    public function index()
+    {
         return view('dashboard.index');
     }
     public function users()
     {
-        $users = User::all();
+        $users = User::with('products')->get();
+        // return $users;
         return view('dashboard.user.users', compact('users'));
     }
 
@@ -36,7 +38,7 @@ class UserController extends Controller
             'lname' => 'string|required',
             'email' => 'email|required|unique:users',
             'mobile' => 'string|required',
-            'password' => 'string | min:6'
+            'password' => 'string |required| min:6 | confirmed'
         ]);
         if ($validator->fails()) {
             $request->session()->flash('status', "Warning! Better check yourself, you're not looking too good.");
@@ -60,7 +62,7 @@ class UserController extends Controller
             'lname' => 'string|required',
             'email' => 'email|required|unique:users',
             'mobile' => 'string|required',
-            'password' => 'string | min:6'
+            'password' => 'string |required| min:6 | confirmed'
         ]);
         if ($validator->fails()) {
             $request->session()->flash('status', "Warning! Better check yourself, you're not looking too good.");

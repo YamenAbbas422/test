@@ -27,7 +27,8 @@ use GuzzleHttp\Middleware;
 Route::get('/', [UserController::class, 'index']);
 //
 Auth::routes(['login'=>false]);
-Route::get('account/verify/{token}', [UsersController::class, 'verifyAccount'])->name('user.verify');
+Route::get('pageverify', [UsersController::class, 'pageverify'])->name('user.pageverify');
+Route::post('account/verify', [UsersController::class, 'verifyAccount'])->name('user.verify');
 Route::post('/resetPassword', [UsersController::class, 'resetPassword']);
 
 
